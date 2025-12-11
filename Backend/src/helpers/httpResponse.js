@@ -16,8 +16,8 @@ export const notFound = (body) => {
 
 export const serverError = (body) => {
   return {
-    sucess: true,
-    statusCode: 200,
-    body: error,
+    sucess: false,
+    statusCode: 500,
+    body: "error",
   };
 };
