@@ -19,5 +19,14 @@ export default class UsersDataAcess {
     return result;
   }
 
-  async updateUser() {}
+  async updateUser(userId, userData) {
+    if (userData.password) {
+    } else {
+      const result = await Mongo.db
+        .collection(collectionName)
+        .findOneAndUpdate({ _id: new ObjectId(userId) }, { $set: userData });
+
+      return result;
+    }
+  }
 }
