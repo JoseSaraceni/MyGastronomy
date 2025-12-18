@@ -1,0 +1,52 @@
+import { Mongo } from "../database/mongo.js";
+import { ObjectId, ReturnDocument } from "mongodb";
+
+const collectionName = "plates";
+
+export default class PlatesDataAcess {
+  async getPlates() {
+    const result = await Mongo.db
+    .collection(collectionName)
+    .find({})
+    .toArray();
+
+    return result;
+  }
+
+    async getAvaliablePlates() {
+    const result = await Mongo.db
+    .collection(collectionName)
+    .find({ available: true})
+    .toArray();
+
+    return result;
+  }
+
+  async addPlate(plateData){
+    const result = await Mongo.db
+    .collection(collectionName)
+    .insertOne(plateData)
+
+    return result
+  }
+
+
+  async deletePlate(plateId) {
+    const result = await Mongo.db
+      .collection(collectionName)
+      .findOneAndDelete({ _id: new ObjectId(plateId) });
+
+    return result;
+  }
+  
+
+  async updatePlate(plateId, plateData) {
+    if (plateId && plateData) {
+      const result = await Mongo.db
+        .collection(collectionName)
+        .findOneAndUpdate({ _id: new ObjectId(plateId) }, { $set: plateData }, {returnDocument: "after"});
+
+      return result;
+    }
+  }
+}

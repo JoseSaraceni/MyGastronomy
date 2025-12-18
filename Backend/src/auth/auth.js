@@ -73,14 +73,14 @@ authRouter.post("/signup", async (req, res) => {
     310000,
     16,
     "sha256",
-    async (err, hashedPassword) => {
-      if (err) {
+    async (error, hashedPassword) => {
+      if (error) {
         return res.status(500).send({
           success: false,
           statusCode: 500,
           body: {
             text: "Error on crypto password!",
-            err: err,
+            error: error,
           },
         });
       }
@@ -131,7 +131,7 @@ authRouter.post("/login", (req, res, next) => {
         success: false,
         statusCode: 400,
         body: {
-          text: "User not found",
+          text: "User or password invalid",
         },
       });
     }

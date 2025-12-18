@@ -14,10 +14,10 @@ export const notFound = (body) => {
   };
 };
 
-export const serverError = (body) => {
+export const serverError = (error) => {
   return {
     sucess: false,
     statusCode: 500,
-    body: "error",
+    body: error,
   };
 };
