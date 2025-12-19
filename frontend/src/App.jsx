@@ -1,3 +1,4 @@
+import Navbar from "./components/navbar/navbar.jsx";
 
 
 
@@ -5,7 +6,7 @@
 export default function App() {
   return (
     <>
-      <h1>Hello World</h1>
+      <Navbar/>
     </>
   )
 }
