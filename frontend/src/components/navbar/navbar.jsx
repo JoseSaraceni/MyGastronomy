@@ -27,9 +27,9 @@ export default function Navbar() {
 
                 <div className={styles.navbarLinksContainer}>
 
-                    <Link to = {'/'} className={styles.navbarLink}Home>Home</Link>
+                    <Link to = {'/'} className={styles.navbarLink}>Home</Link>
 
-                    <Link to = {'/plates'} className={styles.navbarLink}Plates>Plates</Link>
+                    <Link to = {'/plates'} className={styles.navbarLink}>Plates</Link>
 
                     <Link to = {'/cart'}>
                         <LuShoppingCart className={styles.navbarLink}/>
