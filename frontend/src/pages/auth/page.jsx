@@ -1,20 +1,38 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { TextField, Button } from "@mui/material"
 import styles from './page.module.css'
+import authServices from "../../services/auth"
+import { useNavigate } from "react-router-dom"
 
 export default function Auth() {
 
+    const navigate = useNavigate()
+
+    const authData = JSON.parse(localStorage.getItem('auth'))
+
+    useEffect(() => {
+
+        if(!authData) {
+            return navigate('/profile')
+        }
+
+    }, [])
+
+const initialFormData = {
+  email: '',
+  password: '',
+  fullname: '',
+  confirmPassword: ''
+}
+
     const [formType, setFormType] = useState('login')
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState(initialFormData)
+    const {login, signup, authLoading} = authServices()
+
 
     const handleChangeFormType = () => {
-        setFormData(null)
-        if(formType === 'login'){
-            setFormType('signup')
-        }
-        else {
-            setFormType('login')
-        }
+    setFormType(formType === 'login' ? 'signup' : 'login')
+    setFormData(initialFormData)
     }
 
     const handleFormDataChange = (e) => {
@@ -27,7 +45,26 @@ export default function Auth() {
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        console.log(formData)
+        
+        switch (formType){
+            case 'login':
+                login(formData)
+            break;
+
+            case 'signup':
+                if (formData.password !== formData.confirmPassword) {
+                    console.log('Password do not match')
+                    return
+                }
+                signup(formData)
+
+            break;
+
+        }
+    }
+
+    if(authLoading) {
+        return (<h1>Loading...</h1>)
     }
 
     if(formType === 'login') {
@@ -43,6 +80,7 @@ export default function Auth() {
                         label='Email'
                         type="email"
                         name="email"
+                        value={formData.email}
                         onChange={handleFormDataChange}
                     />
 
@@ -51,6 +89,7 @@ export default function Auth() {
                         label='Password'
                         type="password"
                         name="password"
+                        value={formData.password}
                         onChange={handleFormDataChange}
                     />
 
